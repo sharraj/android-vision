@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.google.android.gms.samples.vision.barcodereader"
@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -25,4 +26,7 @@ dependencies {
     // Important - the CameraSource implementation in this project requires version 8.1 or higher.
     compile 'com.google.android.gms:play-services-vision:9.4.0+'
     compile 'com.android.support:design:24.2.0'
+    compile 'com.google.apis:google-api-services-books:v1-rev95-1.23.0'
+    //compile group: 'com.google.api-client', name: 'google-api-client-extensions', version: '1.6.0-beta'
 }
+

@@ -19,6 +19,7 @@ package com.google.android.gms.samples.vision.barcodereader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -52,6 +53,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
+
+        /*
+        Added for network execption
+         */
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+
+
+
 
         findViewById(R.id.read_barcode).setOnClickListener(this);
     }
@@ -103,13 +115,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     statusMessage.setText(R.string.barcode_success);
-                    barcodeValue.setText(barcode.displayValue + "hello");
+                    barcodeValue.setText(barcode.displayValue);
 
                     //Fetch Record using Google Books API.
 
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
 
-                    BooksSample.queryBuilder("isbn",barcode.displayValue );
+                    BookRecord book = BooksSample.queryBuilder("isbn",barcode.displayValue );
+
+                    if (book != null) {
+                        // Display Book details
+
+                        barcodeValue.setText("\n" + "isbn:" + barcode.displayValue +
+                                             "\n\n" + "title:" + book.title +
+                                             "\n" + "descr:" + book.descr +
+                                             "\n\n" + "Author:" + book.authors.get(0) +
+                                             "\n" + "Details:" + book.message +
+                                             "\n" + "WebLink:" + book.webLink);
+                        //upload book to firebase
+
+                    }
+
+
                 } else {
                     statusMessage.setText(R.string.barcode_failure);
                     Log.d(TAG, "No barcode captured, intent data is null");
@@ -123,4 +150,5 @@ public class MainActivity extends Activity implements View.OnClickListener {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
 }

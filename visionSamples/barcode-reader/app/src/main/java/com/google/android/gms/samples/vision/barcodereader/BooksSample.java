@@ -19,6 +19,7 @@ package com.google.android.gms.samples.vision.barcodereader;
         import android.util.Log;
 
         import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+        import com.google.api.client.http.LowLevelHttpRequest;
         import com.google.api.client.json.JsonFactory;
         import com.google.api.client.json.jackson2.JacksonFactory;
         import com.google.api.services.books.Books;
@@ -27,6 +28,9 @@ package com.google.android.gms.samples.vision.barcodereader;
         import com.google.api.services.books.model.Volume;
         import com.google.api.services.books.model.Volumes;
         //import com.google.api.client.extensions.android.http.AndroidHttp;
+
+        import com.google.api.client.http.HttpTransport;
+        import com.google.api.client.http.javanet.NetHttpTransport;
 
         import java.io.IOException;
         import java.net.URLEncoder;
@@ -45,6 +49,9 @@ package com.google.android.gms.samples.vision.barcodereader;
  * Please start by reviewing the Google Books API documentation at:
  * http://code.google.com/apis/books/docs/getting_started.html
  */
+
+
+
 public class BooksSample {
 
     /**
@@ -56,7 +63,7 @@ public class BooksSample {
     private static final NumberFormat CURRENCY_FORMATTER = NumberFormat.getCurrencyInstance();
     private static final NumberFormat PERCENT_FORMATTER = NumberFormat.getPercentInstance();
 
-    private static void queryGoogleBooks(JsonFactory jsonFactory, String query) throws Exception {
+    private static BookRecord queryGoogleBooks(JsonFactory jsonFactory, String query) throws Exception {
         ClientCredentials.errorIfNotSpecified();
 
         //final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), AndroidJsonFactory.getDefaultInstance(), null)
@@ -66,7 +73,7 @@ public class BooksSample {
 
 
         // Set up Books client.
-        final Books books = new Books.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, null)
+        final Books books = new Books.Builder(new NetHttpTransport(), jsonFactory, null)
                 .setApplicationName(APPLICATION_NAME)
                 .setGoogleClientRequestInitializer(new BooksRequestInitializer(ClientCredentials.API_KEY))
                 .build();
@@ -74,15 +81,19 @@ public class BooksSample {
         //System.out.println("Query: [" + query + "]");
         Log.d(TAG, "Query: [" + query + "]");
         List volumesList = books.volumes().list(query);
-        volumesList.setFilter("ebooks");
+        //volumesList.setFilter("ebooks");
 
         // Execute the query.
         Volumes volumes = volumesList.execute();
         if (volumes.getTotalItems() == 0 || volumes.getItems() == null) {
             //System.out.println("No matches found.");
             Log.d(TAG,"No matches found.");
-            return;
+            return null;
         }
+
+        // Create bookRecord
+
+        BookRecord book = new BookRecord();
 
         // Output results.
         for (Volume volume : volumes.getItems()) {
@@ -90,9 +101,11 @@ public class BooksSample {
             Volume.SaleInfo saleInfo = volume.getSaleInfo();
             //System.out.println("==========");
             Log.d(TAG, "==========");
+
             // Title.
             //System.out.println("Title: " + volumeInfo.getTitle());
             Log.d(TAG, "Title: " + volumeInfo.getTitle());
+            book.title = volumeInfo.getTitle();
             // Author(s).
             java.util.List<String> authors = volumeInfo.getAuthors();
             if (authors != null && !authors.isEmpty()) {
@@ -109,10 +122,12 @@ public class BooksSample {
                 System.out.println();
                 Log.d(TAG,"");
             }
+            book.authors = authors;
             // Description (if any).
             if (volumeInfo.getDescription() != null && volumeInfo.getDescription().length() > 0) {
                 //System.out.println("Description: " + volumeInfo.getDescription());
                 Log.d(TAG, "Description: " + volumeInfo.getDescription());
+                book.descr = volumeInfo.getDescription();
             }
             // Ratings (if any).
             if (volumeInfo.getRatingsCount() != null && volumeInfo.getRatingsCount() > 0) {
@@ -155,9 +170,11 @@ public class BooksSample {
             }
             //System.out.println(message);
             Log.d(TAG, message);
+            book.message = message;
             // Link to Google eBooks.
             //System.out.println(volumeInfo.getInfoLink());
             Log.d(TAG, volumeInfo.getInfoLink());
+            book.webLink = volumeInfo.getInfoLink();
         }
         //System.out.println("==========");
         Log.d(TAG, "==========");
@@ -166,9 +183,10 @@ public class BooksSample {
         //                + URLEncoder.encode(query, "UTF-8"));
         Log.d(TAG, volumes.getTotalItems() + " total results at http://books.google.com/ebooks?q="
                                + URLEncoder.encode(query, "UTF-8"));
+        return book;
     }
 
-    public static void queryBuilder(String queryType, String queryData) {
+    public static BookRecord queryBuilder(String queryType, String queryData) {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         try {
             // Verify command line parameters.
@@ -200,8 +218,8 @@ public class BooksSample {
             }
             try {
                 Log.d(TAG, "starting query");
-                queryGoogleBooks(jsonFactory, query);
-                Log.d(TAG, "query done");
+                return queryGoogleBooks(jsonFactory, query);
+                //Log.d(TAG, "query done");
                 // Success!
                 //return;
             } catch (IOException e) {
@@ -212,6 +230,7 @@ public class BooksSample {
 
         }
         //System.exit(0);
+        return null;
     }
 
     /*

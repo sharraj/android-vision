@@ -35,7 +35,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 public class MainActivity extends Activity implements View.OnClickListener {
 
     // use a compound button so either checkbox or switch widgets work.
-    private CompoundButton autoFocus;
+    //private CompoundButton autoFocus;
     private CompoundButton useFlash;
     private TextView statusMessage;
     private TextView barcodeValue;
@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         statusMessage = (TextView)findViewById(R.id.status_message);
         barcodeValue = (TextView)findViewById(R.id.barcode_value);
 
-        autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
+        //autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
 
         /*
@@ -78,7 +78,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (v.getId() == R.id.read_barcode) {
             // launch barcode activity.
             Intent intent = new Intent(this, BarcodeCaptureActivity.class);
-            intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
+            //intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
+
+            //Make AutoFocus always True
+
+            intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
             intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
 
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
@@ -122,18 +126,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
 
                     BookRecord book = BooksSample.queryBuilder("isbn",barcode.displayValue );
-
+                    book.isbn = barcode.displayValue;
                     if (book != null) {
                         // Display Book details
 
-                        barcodeValue.setText("\n" + "isbn:" + barcode.displayValue +
+                        barcodeValue.setText("\n" + "isbn:" + book.isbn +
                                              "\n\n" + "title:" + book.title +
                                              "\n" + "descr:" + book.descr +
                                              "\n\n" + "Author:" + book.authors.get(0) +
                                              "\n" + "Details:" + book.message +
                                              "\n" + "WebLink:" + book.webLink);
-                        //upload book to firebase
-
+                        //upload book to firestore
+                        BookDatabase.pushRecord(book);
                     }
 
 

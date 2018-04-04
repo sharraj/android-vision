@@ -66,6 +66,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
         findViewById(R.id.read_barcode).setOnClickListener(this);
+        findViewById(R.id.fetchBooksButton).setOnClickListener(this);
+        
+
     }
 
     /**
@@ -86,6 +89,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
 
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
+        }
+        else if(v.getId() == R.id.fetchBooksButton){
+            Log.d(TAG, "Fetch registered");
+            BookDatabase.readRecord();
+
         }
 
     }

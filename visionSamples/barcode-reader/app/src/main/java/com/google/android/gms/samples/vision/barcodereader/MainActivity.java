@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         findViewById(R.id.read_barcode).setOnClickListener(this);
         findViewById(R.id.fetchBooksButton).setOnClickListener(this);
-        
+
 
     }
 

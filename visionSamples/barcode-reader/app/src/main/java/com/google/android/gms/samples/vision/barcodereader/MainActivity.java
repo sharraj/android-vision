@@ -134,6 +134,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
 
                     BookRecord book = BooksSample.queryBuilder("isbn",barcode.displayValue );
+
+                    if(book == null){
+                        Log.d(TAG, "HERE!!!!! book api returns null");
+                    }
                     book.isbn = barcode.displayValue;
                     if (book != null) {
                         // Display Book details

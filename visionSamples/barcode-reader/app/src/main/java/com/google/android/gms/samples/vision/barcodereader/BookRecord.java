@@ -14,5 +14,7 @@ public class BookRecord {
     public String descr;
     public String message;
     public String webLink;
+    public String owner;
+    public String status;
 
 }

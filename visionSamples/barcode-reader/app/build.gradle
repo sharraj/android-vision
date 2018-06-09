@@ -10,6 +10,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -26,11 +27,16 @@ dependencies {
     // Important - the CameraSource implementation in this project requires version 8.1 or higher.
     implementation 'com.google.android.gms:play-services-vision:11.8.0'
     implementation 'com.android.support:design:24.2.0'
+
     implementation 'com.google.apis:google-api-services-books:v1-rev95-1.23.0'
     //compile group: 'com.google.api-client', name: 'google-api-client-extensions', version: '1.6.0-beta'
     //compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
     //implementation 'com.google.firebase:firebase-database:11.2.0'
     implementation 'com.google.firebase:firebase-firestore:11.8.0'
+//    implementation 'com.google.firebase:firebase-admin:6.2.0'
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support:support-vector-drawable:24.2.1'
 }
 
 

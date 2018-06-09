@@ -135,9 +135,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                     BookRecord book = BooksSample.queryBuilder("isbn",barcode.displayValue );
 
-                    if(book == null){
-                        Log.d(TAG, "HERE!!!!! book api returns null");
-                    }
                     book.isbn = barcode.displayValue;
                     if (book != null) {
                         // Display Book details
@@ -149,7 +146,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                              "\n" + "Details:" + book.message +
                                              "\n" + "WebLink:" + book.webLink);
                         //upload book to firestore
-                        BookDatabase.pushRecord(book);
+                        BookDatabase.writeRecord(book);
                     }
 
 

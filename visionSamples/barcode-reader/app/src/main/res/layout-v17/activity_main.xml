@@ -47,12 +47,23 @@
         android:text="@string/read_barcode" />
 
     <Switch
+        android:id="@+id/use_flash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/use_flash"
-        android:id="@+id/use_flash"
-        android:layout_alignTop="@+id/auto_focus"
-        android:layout_alignEnd="@+id/barcode_value"
-        android:checked="false" />
+        android:layout_alignEnd="@+id/status_message"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="210dp"
+        android:checked="false"
+        android:text="@string/use_flash" />
+
+    <Button
+        android:id="@+id/navigationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="91dp"
+        android:onClick="onClick"
+        android:text="@string/browse_activity" />
 
 </RelativeLayout>

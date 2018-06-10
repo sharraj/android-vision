@@ -80,6 +80,7 @@ public class BookDatabase {
 
             //increase size parameter by reading, increasing, then writing
             currentCategory = category;
+            Log.d(TAG, "Current Category: " + currentCategory);
 
             db.collection("Categories").document(category).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -93,11 +94,15 @@ public class BookDatabase {
                                 size = (Long) categoryObject.get("size");
                             }
                             //write
-                            categoryObject.put("size", size);
+                            categoryObject.put("size", ++size);
                             db.collection("Categories").document(BookDatabase.currentCategory).set(categoryObject);
                         }
                         else{
+                            //create category document
                             Log.d(TAG, "Document snapshot does not exist");
+                            Map<String, Object> categoryObject = new HashMap<>();
+                            categoryObject.put("size", 1);
+                            db.collection("Categories").document(currentCategory).set(categoryObject);
                         }
                     }
                     else{

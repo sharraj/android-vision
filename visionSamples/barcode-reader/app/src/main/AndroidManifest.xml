@@ -37,11 +37,17 @@
             android:name=".BarcodeCaptureActivity"
             android:label="Read Barcode" />
         <activity
-            android:name=".ui.camera.BrowseActivity"
+            android:name=".BrowseActivity"
             android:label="@string/title_activity_browse" />
         <activity
-            android:name=".BrowseActivity"
-            android:label="@string/title_activity_browse"></activity>
+            android:name=".myBooksActivity"
+            android:label="@string/title_activity_my_books" />
+        <activity
+            android:name=".UploadActivity"
+            android:label="@string/title_activity_upload" />
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"></activity>
     </application>
 
 </manifest>

@@ -59,11 +59,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
          */
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
         StrictMode.setThreadPolicy(policy);
-
-
-
 
         findViewById(R.id.read_barcode).setOnClickListener(this);
         findViewById(R.id.fetchBooksButton).setOnClickListener(this);
@@ -94,6 +90,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Log.d(TAG, "Fetch registered");
             BookDatabase.readRecord();
 
+        }
+        else if(v.getId() == R.id.navigationButton){
+            Intent intent = new Intent(this, BrowseActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Log.d(TAG,  "View Selected: " + Integer.toString(v.getId()));
         }
 
     }

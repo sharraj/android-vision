@@ -19,8 +19,10 @@
 
     <ListView
         android:id="@+id/bookCategoryList"
-        android:layout_width="368dp"
-        android:layout_height="437dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="66dp" />
+        android:layout_width="369dp"
+        android:layout_height="399dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryToolbar" />
 </android.support.constraint.ConstraintLayout>

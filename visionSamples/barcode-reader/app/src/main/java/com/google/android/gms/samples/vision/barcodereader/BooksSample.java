@@ -107,6 +107,7 @@ public class BooksSample {
             Log.d(TAG, "Title: " + volumeInfo.getTitle());
             book.title = volumeInfo.getTitle();
             book.categories = volumeInfo.getCategories();
+
             // Author(s).
             java.util.List<String> authors = volumeInfo.getAuthors();
             if (authors != null && !authors.isEmpty()) {

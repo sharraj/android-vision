@@ -46,8 +46,8 @@
             android:name=".UploadActivity"
             android:label="@string/title_activity_upload" />
         <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"></activity>
+            android:name=".BookCategoryDisplayActivity"
+            android:label="@string/title_activity_book_category_display"></activity>
     </application>
 
 </manifest>

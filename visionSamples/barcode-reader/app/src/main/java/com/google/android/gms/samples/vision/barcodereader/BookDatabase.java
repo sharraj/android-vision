@@ -32,8 +32,9 @@ public class BookDatabase {
 
     final static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String currentCategory;
+    public static Map<String, Object> bookDbEntry;
 
-    public static void writeRecord(BookRecord book) {
+    public static void writeRecord(final BookRecord book) {
 
 
         // Create a book DB entry
@@ -87,6 +88,16 @@ public class BookDatabase {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if(task.isSuccessful()){
                         DocumentSnapshot categorySnapshot = task.getResult();
+
+                        Map<String, Object> bookDbEntry = new HashMap<>();
+                        bookDbEntry.put("isbn", book.isbn);
+                        bookDbEntry.put("title", book.title);
+                        bookDbEntry.put("authors", book.authors);
+                        bookDbEntry.put("categories", book.categories);
+                        bookDbEntry.put("description", book.descr);
+                        bookDbEntry.put("owner", book.owner);
+                        bookDbEntry.put("status", book.status);
+
                         if(categorySnapshot.exists()) {
                             Map<String, Object> categoryObject = categorySnapshot.getData();
                             long size = 0;
@@ -95,14 +106,19 @@ public class BookDatabase {
                             }
                             //write
                             categoryObject.put("size", ++size);
+
+
                             db.collection("Categories").document(BookDatabase.currentCategory).set(categoryObject);
+                            db.collection("Categories").document(BookDatabase.currentCategory).collection("Books").add(bookDbEntry);
                         }
                         else{
                             //create category document
                             Log.d(TAG, "Document snapshot does not exist");
                             Map<String, Object> categoryObject = new HashMap<>();
                             categoryObject.put("size", 1);
-                            db.collection("Categories").document(currentCategory).set(categoryObject);
+                            db.collection("Categories").document(BookDatabase.currentCategory).set(categoryObject);
+                            db.collection("Categories").document(BookDatabase.currentCategory).collection("Books").add(bookDbEntry);
+
                         }
                     }
                     else{

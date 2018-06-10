@@ -95,10 +95,11 @@ public class UploadActivity extends Activity {
 
                     BookRecord book = BooksSample.queryBuilder("isbn",barcode.displayValue );
 
-                    book.isbn = barcode.displayValue;
+
                     if (book != null) {
                         // Display Book details
 
+                        book.isbn = barcode.displayValue;
                         bookInfo.setText("Book added!" +
                                 "\n" + "isbn:" + book.isbn +
                                 "\n" + "title:" + book.title +

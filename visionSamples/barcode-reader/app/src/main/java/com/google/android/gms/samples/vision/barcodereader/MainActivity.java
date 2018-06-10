@@ -32,10 +32,29 @@ import com.google.android.gms.vision.barcode.Barcode;
  * Main activity demonstrating how to pass extra parameters to an activity that
  * reads barcodes.
  */
+
+
+
+/*
+*
+*
+*
+* Will use this activity as a loading screen
+*   Will check for and assign login credentials and launch login activity accordingly
+*   Will launch browse activity afterwards
+*
+*
+* */
+
+
 public class MainActivity extends Activity implements View.OnClickListener {
 
     // use a compound button so either checkbox or switch widgets work.
     //private CompoundButton autoFocus;
+    public static String username = "";
+
+
+
     private CompoundButton useFlash;
     private TextView statusMessage;
     private TextView barcodeValue;
@@ -63,6 +82,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         findViewById(R.id.read_barcode).setOnClickListener(this);
         findViewById(R.id.fetchBooksButton).setOnClickListener(this);
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+
+//        Intent browseIntent = new Intent(MainActivity.this, BrowseActivity.class);
+//        startActivity(browseIntent);
 
 
     }

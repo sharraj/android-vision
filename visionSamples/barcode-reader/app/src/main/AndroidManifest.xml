@@ -9,6 +9,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="false"
@@ -47,7 +52,10 @@
             android:label="@string/title_activity_upload" />
         <activity
             android:name=".BookCategoryDisplayActivity"
-            android:label="@string/title_activity_book_category_display"></activity>
+            android:label="@string/title_activity_book_category_display" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"></activity>
     </application>
 
 </manifest>

@@ -177,7 +177,7 @@ public class BooksSample {
             //System.out.println(volumeInfo.getInfoLink());
             Log.d(TAG, volumeInfo.getInfoLink());
             book.webLink = volumeInfo.getInfoLink();
-            book.owner = "user"+(int)(Math.random() * 5);
+            book.owner = LoginActivity.mEmail;
             book.status = "available";
         }
         //System.out.println("==========");

@@ -32,7 +32,7 @@ public class BookDatabase {
 
     final static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String currentCategory;
-    public static Map<String, Object> bookDbEntry;
+    //public static Map<String, Object> bookDbEntry;
 
     public static void writeRecord(final BookRecord book) {
 

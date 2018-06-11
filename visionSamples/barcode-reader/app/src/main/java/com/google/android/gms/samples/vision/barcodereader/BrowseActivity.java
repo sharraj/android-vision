@@ -89,6 +89,7 @@ public class BrowseActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            Log.d(TAG, "Beginning of db oncomplete");
                             for (DocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 categories.add(document.getId());
@@ -150,6 +151,8 @@ public class BrowseActivity extends AppCompatActivity {
 //                //intent for activity to display book details
 //            }
 //        });
+
+    Log.d(TAG, "End of BrowseActivity");
 
     }
 }

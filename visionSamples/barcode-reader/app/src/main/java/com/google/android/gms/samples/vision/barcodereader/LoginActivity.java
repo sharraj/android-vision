@@ -3,6 +3,7 @@ package com.google.android.gms.samples.vision.barcodereader;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
@@ -401,7 +402,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
+
                 finish();
+                Intent browseIntent = new Intent(LoginActivity.this, BrowseActivity.class);
+                startActivity(browseIntent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

@@ -7,9 +7,19 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 public class myBooksActivity extends Activity {
-
+    private static FirebaseFirestore db;
 
 
     @Override
@@ -47,6 +57,22 @@ public class myBooksActivity extends Activity {
         menuItem.setChecked(true);
         menuItem = menu.getItem(0);
         menuItem.setChecked(false);
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("Users").document(LoginActivity.mEmail).collection("books").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                String [] books = new String [documents.size()];
+                for(int i = 0; i < documents.size(); i++){
+                    books[i] = documents.get(i).getData().get("title").toString();
+                }
+                ListView listView = (ListView) findViewById(R.id.myBooksList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
+                        android.R.layout.simple_list_item_1, books);
+                listView.setAdapter(adapter);
+            }
+        });
     }
 
 

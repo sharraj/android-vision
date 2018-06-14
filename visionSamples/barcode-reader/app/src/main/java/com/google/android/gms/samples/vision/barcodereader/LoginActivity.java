@@ -78,7 +78,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    public static String mEmail = "";
+    public static String mEmail = "sample_user1@example.com";
 
 
     @Override

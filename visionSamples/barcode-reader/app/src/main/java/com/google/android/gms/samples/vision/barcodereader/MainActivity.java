@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -74,7 +75,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
 
         /*
-        Added for network execption
+        Added for network exception
          */
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -83,12 +84,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.read_barcode).setOnClickListener(this);
         findViewById(R.id.fetchBooksButton).setOnClickListener(this);
 
+        //TODO: UNDO COMMENT
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
 
 //        Intent browseIntent = new Intent(MainActivity.this, BrowseActivity.class);
 //        startActivity(browseIntent);
-
+        Button messageButton = (Button) findViewById(R.id.messagingButton);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MessagingActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -120,6 +129,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Intent intent = new Intent(this, BrowseActivity.class);
             startActivity(intent);
         }
+//        else if(v.getId() == R.id.messagingButton){
+//            Intent intent = new Intent(MainActivity.this, MessagingActivity.class);
+//            startActivity(intent);
+//        }
         else{
             Log.d(TAG,  "View Selected: " + Integer.toString(v.getId()));
         }
